@@ -9,7 +9,11 @@ Route::get('/', [ProductController::class, 'index']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', function () {
+        return 'Bienvenue dans l\'espace admin !';
+    });
+});
 Route::get('/produits/{id}', [ProductController::class, 'show']);
 Route::post('/panier/ajouter/{id}', [CartController::class, 'add']);
 Route::get('/panier', [CartController::class, 'index']);
