@@ -4,16 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
-        return 'Bienvenue dans l\'espace admin !';
-    });
-});
+
 Route::get('/produits/{id}', [ProductController::class, 'show']);
 Route::post('/panier/ajouter/{id}', [CartController::class, 'add']);
 Route::get('/panier', [CartController::class, 'index']);
@@ -25,4 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/panier/valider', [CartController::class, 'checkout']);
 });
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::resource('products', AdminProductController::class);
+});
+
 require __DIR__.'/auth.php';
