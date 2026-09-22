@@ -72,4 +72,4 @@ $user->save();
 
 ## Auteur
 
-Développé par Yay (J-jeune) dans le cadre d'un projet Licence Informatique.
+Développé par J-jeune dans le cadre d'un projet Licence Informatique.
