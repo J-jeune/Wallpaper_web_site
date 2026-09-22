@@ -18,5 +18,9 @@ class CategorySeeder extends Seeder
         Category::create(['nom' => 'Rally']);
         Category::create(['nom' => 'Offroad']);
         Category::create(['nom' => 'Luxury']);
+        Category::create(['nom' => 'Supercar']);
+        Category::create(['nom' => 'JDM']);
+        Category::create(['nom' => 'Classic']);
+        Category::create(['nom' => 'Electric']);
     }
 }

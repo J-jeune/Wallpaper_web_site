@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/dashboard', function () {
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::resource('products', AdminProductController::class);
+    Route::resource('categories', AdminCategoryController::class);
+    Route::resource('brands', AdminBrandController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -17,5 +17,9 @@ class BrandSeeder extends Seeder
         Brand::create(['nom' => 'Ford']);
         Brand::create(['nom' => 'Subaru']);
         Brand::create(['nom' => 'Lamborghini']);
+        Brand::create(['nom' => 'Toyota']);
+        Brand::create(['nom' => 'Porsche']);
+        Brand::create(['nom' => 'Nissan']);
+        Brand::create(['nom' => 'Tesla']);
     }
 }
