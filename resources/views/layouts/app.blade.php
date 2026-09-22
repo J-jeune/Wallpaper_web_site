@@ -17,6 +17,15 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Inscription</a></li>
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
+                        @if (auth()->user()->is_admin)
+                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Admin</a></li>
+                        @endif
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
+                            </form>
+                        </li>
                     @endguest
                 </ul>
             </div>
