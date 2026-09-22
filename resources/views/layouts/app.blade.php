@@ -12,6 +12,7 @@
             <a class="navbar-brand" href="/">Wallpaper Web Site</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/panier">Panier</a></li>
                     @guest
                         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Inscription</a></li>
