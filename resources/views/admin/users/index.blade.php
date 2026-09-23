@@ -1,31 +1,41 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Admin - Utilisateurs')
+@section('title', 'Utilisateurs')
 
 @section('content')
 <h1 class="mb-4">Gestion des utilisateurs</h1>
 
-<table class="table">
+<table class="table admin-table">
     <thead>
         <tr>
             <th>Nom</th>
             <th>Email</th>
-            <th>Admin</th>
-            <th>Actions</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($users as $user)
             <tr>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->is_admin ? 'Oui' : 'Non' }}</td>
+                <td class="fw-semibold">{{ $user->name }}</td>
+                <td class="text-muted">{{ $user->email }}</td>
                 <td>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    @if ($user->is_admin)
+                        <span class="badge bg-success"><i class="bi bi-shield-check"></i> Admin</span>
+                    @else
+                        <span class="badge bg-light text-dark">Client</span>
+                    @endif
+                </td>
+                <td class="text-end">
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-warning rounded-pill">
+                        <i class="bi bi-pencil"></i>
+                    </a>
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>

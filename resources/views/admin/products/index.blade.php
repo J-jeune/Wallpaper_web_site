@@ -1,37 +1,39 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Admin - Produits')
+@section('title', 'Commandes')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Gestion des produits</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-primary">Nouveau produit</a>
-</div>
+<h1 class="mb-4">Gestion des commandes</h1>
 
-<table class="table">
+<table class="table admin-table">
     <thead>
         <tr>
-            <th>Image</th>
-            <th>Titre</th>
-            <th>Marque</th>
-            <th>Prix</th>
-            <th>Actions</th>
+            <th>N°</th>
+            <th>Client</th>
+            <th>Total</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($products as $product)
+        @foreach ($orders as $order)
             <tr>
-                <td><img src="{{ asset('images/products/' . $product->image) }}" width="60"></td>
-                <td>{{ $product->titre }}</td>
-                <td>{{ $product->brand->nom }}</td>
-                <td>{{ $product->prix }} €</td>
+                <td class="fw-semibold">#{{ $order->id }}</td>
+                <td>{{ $order->user->name }}</td>
+                <td class="fw-bold">{{ $order->total }} €</td>
                 <td>
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                    </form>
+                    @if ($order->statut == 'payée')
+                        <span class="badge bg-success">{{ $order->statut }}</span>
+                    @elseif ($order->statut == 'expédiée')
+                        <span class="badge bg-primary">{{ $order->statut }}</span>
+                    @else
+                        <span class="badge bg-warning text-dark">{{ $order->statut }}</span>
+                    @endif
+                </td>
+                <td class="text-end">
+                    <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                        <i class="bi bi-eye"></i> Voir
+                    </a>
                 </td>
             </tr>
         @endforeach
