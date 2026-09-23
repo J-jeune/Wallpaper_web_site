@@ -5,7 +5,7 @@
 @section('content')
 <h1 class="mb-4">Nouveau produit</h1>
 
-<form action="{{ route('products.store') }}" method="POST">
+<form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="mb-3">
@@ -24,8 +24,8 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Image (nom de fichier)</label>
-        <input type="text" name="image" class="form-control" value="{{ old('image') }}">
+        <label class="form-label">Image</label>
+        <input type="file" name="image" class="form-control">
     </div>
 
     <div class="mb-3">

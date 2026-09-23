@@ -29,11 +29,20 @@ class ProductController extends Controller
             'titre' => 'required',
             'description' => 'required',
             'prix' => 'required|numeric',
-            'image' => 'required',
+            'image' => 'required|image|max:2048',
             'brand_id' => 'required|exists:brands,id',
         ]);
 
-        $product = Product::create($request->only('titre', 'description', 'prix', 'image', 'brand_id'));
+        $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('images/products'), $imageName);
+
+        $product = Product::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'prix' => $request->prix,
+            'image' => $imageName,
+            'brand_id' => $request->brand_id,
+        ]);
 
         $product->categories()->sync($request->input('categories', []));
 
@@ -64,13 +73,21 @@ class ProductController extends Controller
             'titre' => 'required',
             'description' => 'required',
             'prix' => 'required|numeric',
-            'image' => 'required',
+            'image' => 'nullable|image|max:2048',
             'brand_id' => 'required|exists:brands,id',
         ]);
 
         $product = Product::findOrFail($id);
-        $product->update($request->only('titre', 'description', 'prix', 'image', 'brand_id'));
 
+        $data = $request->only('titre', 'description', 'prix', 'brand_id');
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images/products'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        $product->update($data);
         $product->categories()->sync($request->input('categories', []));
 
         return redirect('/admin/products');

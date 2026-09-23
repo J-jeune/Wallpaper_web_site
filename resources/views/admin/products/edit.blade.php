@@ -5,7 +5,7 @@
 @section('content')
 <h1 class="mb-4">Modifier le produit</h1>
 
-<form action="{{ route('products.update', $product->id) }}" method="POST">
+<form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -25,8 +25,10 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Image (nom de fichier)</label>
-        <input type="text" name="image" class="form-control" value="{{ old('image', $product->image) }}">
+        <label class="form-label">Image actuelle</label><br>
+        <img src="{{ asset('images/products/' . $product->image) }}" width="150" class="mb-2"><br>
+        <label class="form-label">Changer l'image (laisser vide pour garder l'actuelle)</label>
+        <input type="file" name="image" class="form-control">
     </div>
 
     <div class="mb-3">

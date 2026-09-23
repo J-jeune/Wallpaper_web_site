@@ -11,6 +11,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Image</th>
             <th>Titre</th>
             <th>Marque</th>
             <th>Prix</th>
@@ -20,6 +21,7 @@
     <tbody>
         @foreach ($products as $product)
             <tr>
+                <td><img src="{{ asset('images/products/' . $product->image) }}" width="60"></td>
                 <td>{{ $product->titre }}</td>
                 <td>{{ $product->brand->nom }}</td>
                 <td>{{ $product->prix }} €</td>

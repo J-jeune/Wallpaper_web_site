@@ -5,6 +5,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8">
+        <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid mb-3" alt="{{ $product->titre }}">
         <h1>{{ $product->titre }}</h1>
         <p class="text-muted">{{ $product->brand->nom }}</p>
         <p>{{ $product->description }}</p>
