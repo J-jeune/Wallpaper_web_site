@@ -1,39 +1,43 @@
 @extends('layouts.admin')
 
-@section('title', 'Commandes')
+@section('title', 'Produits')
 
 @section('content')
-<h1 class="mb-4">Gestion des commandes</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestion des produits</h1>
+    <a href="{{ route('products.create') }}" class="btn btn-primary rounded-pill px-4">
+        <i class="bi bi-plus-lg"></i> Nouveau produit
+    </a>
+</div>
 
 <table class="table admin-table">
     <thead>
         <tr>
-            <th>N°</th>
-            <th>Client</th>
-            <th>Total</th>
-            <th>Statut</th>
+            <th>Image</th>
+            <th>Titre</th>
+            <th>Marque</th>
+            <th>Prix</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($orders as $order)
+        @foreach ($products as $product)
             <tr>
-                <td class="fw-semibold">#{{ $order->id }}</td>
-                <td>{{ $order->user->name }}</td>
-                <td class="fw-bold">{{ $order->total }} €</td>
-                <td>
-                    @if ($order->statut == 'payée')
-                        <span class="badge bg-success">{{ $order->statut }}</span>
-                    @elseif ($order->statut == 'expédiée')
-                        <span class="badge bg-primary">{{ $order->statut }}</span>
-                    @else
-                        <span class="badge bg-warning text-dark">{{ $order->statut }}</span>
-                    @endif
-                </td>
+                <td><img src="{{ asset('images/products/' . $product->image) }}" width="50" height="50" class="rounded-circle" style="object-fit: cover;"></td>
+                <td class="fw-semibold">{{ $product->titre }}</td>
+                <td><span class="badge bg-secondary">{{ $product->brand->nom }}</span></td>
+                <td class="fw-bold">{{ $product->prix }} €</td>
                 <td class="text-end">
-                    <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-outline-primary rounded-pill">
-                        <i class="bi bi-eye"></i> Voir
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-warning rounded-pill">
+                        <i class="bi bi-pencil"></i>
                     </a>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
